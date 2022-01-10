@@ -35,8 +35,17 @@ def login_test(id, pw):
     cursor.execute(sql)
     
     query_result = cursor.fetchone()   # 검색결과가 없으면 None이 리턴됨   / 검색결과가 있으면 그 사용자의 정보를 담은 dict가 리턴됨
-    print(query_result)
     
-    return{
-        'test' : 'TEST'
-    }
+    # 쿼리 결과가 None이면 아이디,비밀번호 맞는 사람이 없다 => 로그인 실패
+    if query_result == None:
+        return {
+            'code' : 400,
+            'message' : '아이디 또는 비밀번호가 잘못되었습니다.'
+        }, 400
+        
+    # 검색결과가 있다 => 아이디와 비밀번호 모두 맞는 사람이 있다 => 로그인 성공
+    else :
+        return {
+            'code' : 200,
+            'message' : '로그인에 성공'
+        }      
