@@ -30,6 +30,15 @@ def create_app():
         # 아이디 : login_is 이름표를 뽑아서 사용
         # 비밀번호 : pw 이름표로 뽑아서 사용
         
+        # 만약에 우리가 원하는 파라미터가 안들어왔다면, Internal server보다 잘못보냈다는 코드를 추가해보자
+        # dict의 key값의 데이터가 실제로 존재하니? 
+        # if params['login_id'] is None or params['pw'] is None:
+        if 'login_id' not in params.keys() or 'pw' not in params.keys():
+            return {
+                'code' : 400,
+                'message' : 'login_id or pw 중 하나가 첨부되지 않았습니다.'           
+            }
+        
         id = params['login_id']
         pw = params['pw']
         
