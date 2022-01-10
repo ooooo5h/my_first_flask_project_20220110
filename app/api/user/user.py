@@ -4,6 +4,20 @@ from pymysql.cursors import DictCursor
 # 사용자 정보에 관련된 기능들을 모아두는 모듈
 # app.py에서 이 함수들을 끌어다 사용
 
+# db연결 전담 변수
+db = connect(
+    host='finalproject.cbqjwimiu76h.ap-northeast-2.rds.amazonaws.com',
+    port=3306,
+    user='admin',
+    passwd='Vmfhwprxm!123',
+    db='test_phone_book',
+    charset = 'utf8',  
+    cursorclass = DictCursor,
+)
+
+cursor = db.cursor()
+
+
 def user_test():
     
     # 추가 기능 작성
@@ -18,17 +32,6 @@ def user_test():
 def login_test(id, pw):
     
     # id와 pw을 이용해서 SQL쿼리 작성 -> 결과에 따라 다른 응답 리턴
-    db = connect(
-        host='finalproject.cbqjwimiu76h.ap-northeast-2.rds.amazonaws.com',
-        port=3306,
-        user='admin',
-        passwd='Vmfhwprxm!123',
-        db='test_phone_book',
-        charset = 'utf8',  
-        cursorclass = DictCursor,
-    )
-    
-    cursor = db.cursor()
     
     sql = f"SELECT * FROM users WHERE email='{id}'AND password='{pw}'"
 
@@ -62,3 +65,13 @@ def login_test(id, pw):
                 'user' : user_dict,
             }
         }      
+
+
+# 회원가입 함수
+def sign_up(params):
+    sql = f"INSERT INTO users (email, password, nickname) VALUES ('{params['email']}','{params['pw']}','{params['nick']}'); "
+    print(f'완성된 쿼리 : {sql}')
+    
+    return {
+        'test' : 'test'
+    }
