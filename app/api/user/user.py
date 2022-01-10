@@ -45,7 +45,20 @@ def login_test(id, pw):
         
     # 검색결과가 있다 => 아이디와 비밀번호 모두 맞는 사람이 있다 => 로그인 성공
     else :
+        
+        # query_result가 실체가 있다(None이 아니다!!)  => 앱에서 사용 가능한 JSONObject로 보내보자
+        print(query_result)
+        
+        user_dict = {
+            'id' : query_result['id'],
+            'email' : query_result['email'],
+            'nickname' : query_result['nickname']
+        }
+        
         return {
             'code' : 200,
-            'message' : '로그인에 성공'
+            'message' : '로그인에 성공',
+            'data' : {
+                'user' : user_dict,
+            }
         }      
