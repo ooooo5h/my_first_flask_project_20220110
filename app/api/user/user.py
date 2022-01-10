@@ -72,6 +72,24 @@ def login_test(id, pw):
 # 2. 닉네임도 사용중이라면 400으로 에러처리
 # 둘 다 통과해야 실제 INSERT INTO실행 후 200으로 결과 처리 + 가입된 사용자 정보도 내려주자
 def sign_up(params):
+    
+    # 이메일이 사용중인지 먼저 확인
+    # params['email']과 같은 이메일이 DB에 있는 지 조회해보자(SELECT문)
+    
+    sql = f"SELECT * FROM users WHERE email = '{params['email']}'"
+
+    cursor.execute(sql)
+    email_check_resut = cursor.fetchone()   # 같은 이메일이 하나라도 있는가?
+    
+    if email_check_result :
+        # 이메일 검사 쿼리의 결과가 None이 아니라 실체가 있다면
+        # 이미 이메일이 사용중이라는 이야기 => DB에 등록 X
+        return {
+            'code' : 400,
+            'message' : '이미 중복된 이메일입니다.',
+        }, 400
+        
+    
     sql = f"INSERT INTO users (email, password, nickname) VALUES ('{params['email']}','{params['pw']}','{params['nick']}'); "
     print(f'완성된 쿼리 : {sql}')
     
