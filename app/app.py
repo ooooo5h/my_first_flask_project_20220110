@@ -22,5 +22,16 @@ def create_app():
     def web_test():
         return render_template('web_test.html')   # templates폴더 내부의 파일을 불러내는 역할
     
+    
+    @app.route("/json")
+    def json_test():
+        # JSON : 양식 => "이름표" : 실제 값의 조합(dictionary를 이용하면 작업이 편하다)
+        test_dict = {}
+        test_dict['name'] = '전은형'
+        test_dict['birth_year'] = 1991
+        test_dict['height'] = 165.6
+        test_dict['is_male'] = False        
+        
+            
     # 이 서버를 사용하도록 결과로 내보내자
     return app
