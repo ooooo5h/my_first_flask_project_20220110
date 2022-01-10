@@ -33,7 +33,29 @@ def create_app():
         test_dict['is_male'] = False        
         
         return jsonify(test_dict)  # dict를 가지고 json으로 변경하는 함수를 활용해서 실제로 JSON 응답 내려주기
+    
+    
+    @app.route("/json2")
+    def json_test2():
+        hello_dict = {}
+        hello_dict['korean'] = '안녕하세요'
+        hello_dict['english'] = 'Hello'
         
+        return hello_dict
+        
+        
+    @app.route("/json3")
+    def json_test3():
+        
+        user_dict = {}
+        user_dict['name'] = '전!은!형!'
+        user_dict['birth_day'] = '1991-03-14'
+        
+        return {
+            'code' : 200,
+            'message' : '아니 이게 된다고?',
+            'data' : user_dict           
+        }
             
     # 이 서버를 사용하도록 결과로 내보내자
     return app
