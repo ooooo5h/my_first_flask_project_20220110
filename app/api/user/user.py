@@ -1,3 +1,6 @@
+from pymysql import connect
+from pymysql.cursors import DictCursor
+
 # 사용자 정보에 관련된 기능들을 모아두는 모듈
 # app.py에서 이 함수들을 끌어다 사용
 
@@ -13,16 +16,27 @@ def user_test():
     
     
 def login_test(id, pw):
-    # 아이디 : admin , 비밀번호 : qwer 이면 로그인 성공으로 응답
-    # 그 외는 실패처리
     
-    if id == 'admin' and pw == 'qwer':
-        return {
-            'code' : 200,
-            'message' : 'login OK',
-        } 
-    else :
-        return {
-            'code' : 400,
-            'message' : 'id or pw incorrect'
-        }, 400
+    # id와 pw을 이용해서 SQL쿼리 작성 -> 결과에 따라 다른 응답 리턴
+    db = connect(
+        host='finalproject.cbqjwimiu76h.ap-northeast-2.rds.amazonaws.com',
+        port=3306,
+        user='admin',
+        passwd='Vmfhwprxm!123',
+        db='test_phone_book',
+        charset = 'utf8',  
+        cursorclass = DictCursor,
+    )
+    
+    cursor = db.cursor()
+    
+    sql = f"SELECT * FROM users WHERE email='{id}'AND password='{pw}'"
+
+    cursor.execute(sql)
+    
+    query_result = cursor.fetchone()   # 검색결과가 없으면 None이 리턴됨   / 검색결과가 있으면 그 사용자의 정보를 담은 dict가 리턴됨
+    print(query_result)
+    
+    return{
+        'test' : 'TEST'
+    }
