@@ -45,22 +45,23 @@ def login_test(id, pw):
             'code' : 400,
             'message' : '존재하지 않는 이메일입니다.',
         }, 400
+        
+        
+    sql = f"SELECT * FROM users WHERE password= '{pw}'"
+        
+    cursor.execute(sql)
+    pw_check_result = cursor.fetchone()               
+    if pw_check_result == None :
+        return {
+            'code' : 400,
+            'message' : '비밀번호가 틀렸습니다.',
+        }, 400
+        
     else :
-        sql = f"SELECT * FROM users WHERE password= '{pw}'"
-        
-        cursor.execute(sql)
-        pw_check_result = cursor.fetchone()
-        
-        if pw_check_result == None :
-            return {
-                'code' : 400,
-                'message' : '비밀번호가 틀렸습니다.',
-            }, 400
-        else :
-            return {
-                'code' : 200,
-                'message' : '000님 로그인에 성공하셨습니다.',
-            },200
+        return {
+            'code' : 200,
+            'message' : '000님 로그인에 성공하셨습니다.',
+        },200
     
     
     
