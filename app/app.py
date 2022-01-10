@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask.templating import render_template
 
 def create_app():
@@ -31,6 +31,8 @@ def create_app():
         test_dict['birth_year'] = 1991
         test_dict['height'] = 165.6
         test_dict['is_male'] = False        
+        
+        return jsonify(test_dict)  # dict를 가지고 json으로 변경하는 함수를 활용해서 실제로 JSON 응답 내려주기
         
             
     # 이 서버를 사용하도록 결과로 내보내자
