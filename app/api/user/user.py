@@ -33,6 +33,12 @@ def login_test(id, pw):
     
     # id와 pw을 이용해서 SQL쿼리 작성 -> 결과에 따라 다른 응답 리턴
     
+    
+    ### 도전과제 : 이메일부터 있는지 검사하고, 해당 이메일이 없다면 "존재하지 않는 이메일입니다." message string으로 담아서 리턴하고 코드는 400으로
+    # 이메일이 있다면? 추가 검사를 하자
+    # 비밀번호도 맞는지 추가검사하고, 비밀번호가 맞다면 코드200으로 누가 로그인했는지 응답을 했는지(지금처럼 응답해주기)
+    # => 비밀번호가 틀리다 => 이메일은 존재하는데, 비밀번호만 틀리단 이야기 => 비밀번호가 틀렸습니다 message string으로 리턴하고 코드 400
+    
     sql = f"SELECT * FROM users WHERE email='{id}'AND password='{pw}'"
 
     cursor.execute(sql)
@@ -121,7 +127,7 @@ def sign_up(params):
             'user' : {
                 'id' : sign_up_user['id'],
                 'email' : sign_up_user['email'],
-                'nickname' : sign_up_user['nickname']
+                'nickname' : sign_up_user['nickname'],
             }
         }
     }
