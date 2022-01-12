@@ -30,13 +30,13 @@ def add_contact_to_db(params):
             'message' : '존재하지 않는 유저의 id입니다.'
         }, 400
     
-    # print('받아오는 파라미터가 어떻게 되나요 : ', params)
-    
     # 연락처를 추가로 등록하는 sql 작성(어디에 넣을지 적는 란에는 DB(HeidiSQL)와 같은 명으로 작성)
     sql = f"INSERT INTO contacts (user_id, name, phone_num, memo) VALUES ({params['user_id']},'{params['name']}','{params['phone']}','{params['memo']}')"
-    print(sql)
+    
+    cursor.execute(sql)
+    db.commit()
     
     return {
         'code' : 200,
-        'message' : '임시 연락처 추가 성공 응답',
-    }
+        'message' : '연락처 등록 성공',
+    }, 200
