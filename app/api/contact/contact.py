@@ -63,7 +63,7 @@ def get_contacts_from_db(params):
         contact['phone_num'] = row['phone_num']
         contact['memo'] = row['memo']
         
-        contact['created_at'] = row['created_at'].strftime('%Y-%m-%d %H:%M:%S')
+        contact['created_at'] = str(row['created_at'])
         
         contacts_arr.append(contact)
 
