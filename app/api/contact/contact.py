@@ -32,7 +32,10 @@ def add_contact_to_db(params):
     
     sql = f"INSERT INTO contacts (user_id, name, phone_num, memo) VALUES ({params['user_id']}, '{params['name']}', '{params['phone']}','{params['memo']}')"
     
+    cursor.execute(sql)
+    db.commit()
+    
     return {
         'code' : 200,
-        'message' : '임시 연락처 추가 성공 응답'
+        'message' : '연락처 등록 성공'
     }
