@@ -33,7 +33,7 @@ def add_contact_to_db(params):
         }, 400
     
     # 연락처를 추가로 등록하는 sql 작성(어디에 넣을지 적는 란에는 DB(HeidiSQL)와 같은 명으로 작성)
-    sql = f"INSERT INTO contacts (user_id, name, phone_num, memo) VALUES ({params['user_id']},'{params['name']}','{params['phone']}','{params['memo']}')"
+    sql = f"INSERT INTO contacts (user_id, name, phone_num, memo, email) VALUES ({params['user_id']},'{params['name']}','{params['phone']}','{params['memo']}', '{params['email']}')"
     
     cursor.execute(sql)
     db.commit()

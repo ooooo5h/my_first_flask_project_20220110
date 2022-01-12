@@ -7,6 +7,7 @@ class Contacts :
         self.id = data_dict['id']
         self.name = data_dict['name']
         self.phone = data_dict['phone_num']  # DB의 컬럼은 phone_num , 변수이름은 phone
+        self.email = data_dict['email']      # DB에 컬럼이 추가 : 변수 항목 추가
         self.memo = data_dict['memo']
         self.created_at = data_dict['created_at']
         
@@ -17,6 +18,7 @@ class Contacts :
             'id' : self.id,
             'name' : self.name,
             'phone_num' : self.phone,
+            'email' : self.email,
             'memo' : self.memo,
             'created_at' : str(self.created_at)
         }
