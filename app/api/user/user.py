@@ -43,26 +43,35 @@ def login_test(id, pw):
     if email_check_result == None:
         return {
             'code' : 400,
-            'message' : '존재하지 않는 이메일입니다.',
+            'message' : '존재하지 않는 이메일',
         }, 400
         
         
-    sql = f"SELECT * FROM users WHERE password= '{pw}'"
+    sql = f"SELECT * FROM users WHERE email = '{id}' AND password= '{pw}'"
         
     cursor.execute(sql)
-    pw_check_result = cursor.fetchone()               
+    pw_check_result = cursor.fetchone()            
+       
     if pw_check_result == None :
         return {
             'code' : 400,
-            'message' : '비밀번호가 틀렸습니다.',
+            'message' : '비밀번호가 틀림',
         }, 400
-        
-    else :
-        return {
-            'code' : 200,
-            'message' : '000님 로그인에 성공하셨습니다.',
-        },200
-    
+       
+    user_dict = {
+        'id' : pw_check_result['id'],
+        'email' : pw_check_result['email'],
+        'nickname' : pw_check_result['nickname'],
+    }        
+
+    return {
+        'code' : 200,
+        'message' : '로그인 성공',
+        'data' : {
+            'user' : user_dict,
+        }
+    }
+
     
     
     
