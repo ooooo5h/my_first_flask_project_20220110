@@ -46,8 +46,22 @@ def add_contact_to_db(params):
 def get_contacts_from_db(params):
     # 기본버전 : 해당 사용자의 모든 연락처를 목록으로 만들어서 리턴
     # 응용버전1 : 파라미터의 최신순 or 이름순인지 정렬 순서를 입력받고 그에 맞게 리턴
+    # ========> 이 파라미터는, (업데이트 하지 않았다면) 첨부되지 않을 수도 있다
     # 응용버전2 : 한번에 10개씩만 내려주자(게시판처럼, 페이징 처리)
     sql = f"SELECT * FROM contacts WHERE user_id = {params['user_id']}"
+    
+    # order_type파라미터가 실제로 올때만 추가 작업
+    if 'order_type' in params.keys():
+        order_type = params['order_type']
+        if order_type == '최신순' :
+            sql = '최신순 쿼리'
+        elif order_type == '이름순' :
+            sql = '이름순 쿼리'
+        
+    print(sql)
+    return{
+        '임시응답' : '임시'
+    }
     
     cursor.execute(sql)
     query_result = cursor.fetchall()  # 목록을 가져와야하니까 fetchall
