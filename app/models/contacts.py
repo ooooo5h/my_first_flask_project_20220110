@@ -17,7 +17,7 @@ class Contacts :
             'id' : self.id,
             'name' : self.name,
             'phone_num' : self.phone,
-            'memo'  : self.memo,
+            'memo' : self.memo,
             'created_at' : str(self.created_at)
         }
         

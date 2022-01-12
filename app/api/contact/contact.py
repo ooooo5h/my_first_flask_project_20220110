@@ -81,21 +81,8 @@ def get_contacts_from_db(params):
     # DB의 실행결과 한 줄을 가지고, 여러가지 가공을 통해 클라이언트에게 전해줄 목록에 담기도록 돌린 반복문
     for row in query_result:
         
-        # 클라이언트가 받아들이기 편리한 구조(딕셔너리)로 (가공된)연락처를 담아줌
-        contact = {}
-        
-        # contact의 내용 채우자
-        contact['id'] = row['id']
-        contact['name'] = row['name']
-        contact['phone_num'] = row['phone_num']
-        contact['memo'] = row['memo']
-        
-        # datetime으로 오는 데이터를 str로 가공해서 담아보자
-        # datetime -> str로 변경? ==> strftime 활용하면 됨 (2022-01-08 01:00:00 양식)
-        contact['created_at'] = str(row['created_at'])
-        
-        # 내용이 채워진 contact를 리스트에 추가
-        contacts_arr.append(contact)
+        contact = Contacts(row)
+        contacts_arr.append(contact.get_data_object())
     
     return{
         'code' : 200,
