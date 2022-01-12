@@ -48,9 +48,29 @@ def get_contacts_from_db(params):
     # 응용버전1 : 파라미터의 최신순 or 이름순인지 정렬 순서를 입력받고 그에 맞게 리턴
     # 응용버전2 : 한번에 10개씩만 내려주자(게시판처럼, 페이징 처리)
     sql = f"SELECT * FROM contacts WHERE user_id = {params['user_id']}"
-    print('sql 어떻게 오나 테스트 : ', sql)
+    
+    cursor.execute(sql)
+    query_result = cursor.fetchall()  # 목록을 가져와야하니까 fetchall
+    
+    contacts_arr = []
+    
+    for row in query_result:
+        
+        contact = {}
+        
+        # contact의 내용 채우자
+        contact['id'] = row['id']
+        contact['name'] = row['name']
+        contact['phone_num'] = row['phone_num']
+        contact['memo'] = row['memo']
+        
+        # 내용이 채워진 contact를 리스트에 추가
+        contacts_arr.append(contact)
     
     return{
         'code' : 200,
-        'message' : '임시 성공 응답',
+        'message' : '내 연락처 목록',
+        'data' : {
+            'contacts' : contacts_arr,    # 리스트를 통째로 응답으로 내보내줌 => JSONArray를 응답으로 주겠다는 뜻
+        }
     }, 200
