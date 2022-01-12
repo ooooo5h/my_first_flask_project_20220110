@@ -48,10 +48,29 @@ def get_contacts_from_db(params):
     # 응용버전2 : 한번에 10개씩만 내려주자(게시판처럼, 페이징 처리
     
     sql = f"SELECT * FROM contacts WHERE user_id = {params['user_id']} "
-    print('SQL 어떻게 오나 테스트 : ', sql)
+
+    cursor.execute(sql)
+    query_result = cursor.fetchall()
+    
+    contacts_arr = []
+    
+    for row in query_result:
+        
+        contact = {}
+        
+        contact['id'] = row['id']
+        contact['name'] = row['name']
+        contact['phone_num'] = row['phone_num']
+        contact['memo'] = row['memo']
+        
+        contacts_arr.append(contact)
+
     
     return{
         'code' : 200,
-        'message' : '임시 성공 응답'
-    }
+        'message' : '내 연락처 목록',
+        'data' : {
+            'contacts' : contacts_arr,    # 리스트를 통째로 보내줌(JSONArray)
+        }
+    }, 200
     
