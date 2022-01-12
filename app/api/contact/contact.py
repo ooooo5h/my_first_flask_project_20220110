@@ -49,7 +49,7 @@ def get_contacts_from_db(params):
     # ========> 이 파라미터는, (업데이트 하지 않았다면) 첨부되지 않을 수도 있다
     # 응용버전2 : 한번에 10개씩만 내려주자(게시판처럼, 페이징 처리)
     sql = f"SELECT * FROM contacts WHERE user_id = {params['user_id']}"
-    
+       
     # order_type파라미터가 실제로 올때만 추가 작업
     if 'order_type' in params.keys():
         order_type = params['order_type']
@@ -57,6 +57,16 @@ def get_contacts_from_db(params):
             sql = f"{sql} ORDER BY created_at DESC"   # 기존 쿼리 뒤에, ORDER BY created_at DESC 추가
         elif order_type == '이름순' :
             sql = f"{sql} ORDER BY name"   # 기존 쿼리 뒤에, ORDER BY name 추가
+        
+        
+    # 페이지의 번호가 들어오면, 그때 일정 갯수만큼 넘기고, 그 다음 n개를 가져오는 식으로 처리하자
+    if 'page_num' in params.keys():
+        page_num = int(params['page_num'])
+        
+        # 0페이지 : 0개 넘기고, 그 다음 2개
+        # 1페이지 : 2개를 넘기고, 그 다음 2개
+        # 2페이지 : 4개를 넘기고, 그 다음 2개 -> 넘기는 갯수 : page_num * 2 , 보여주는 갯수 : 2
+        sql = f"{sql} LIMIT {page_num * 2}, 2"   
         
     print(sql)
        
