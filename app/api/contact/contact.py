@@ -17,6 +17,19 @@ cursor = db.cursor()
 
 # 연락처 추가
 def add_contact_to_db(params):
+    
+    # 연락처를 추가하기전에, user_id 파라미터의 값이 실제 사용자 id가 있나 확인하기
+    sql = f"SELECT * FROM users WHERE id = {params['user_id']}"
+    
+    cursor.execute(sql)
+    user_id_result = cursor.fetchone()
+    
+    if user_id_result is None:
+        return {
+            'code' : 400,
+            'message' : '존재하지 않는 유저의 id입니다.'
+        }, 400
+    
     # print('받아오는 파라미터가 어떻게 되나요 : ', params)
     
     # 연락처를 추가로 등록하는 sql 작성(어디에 넣을지 적는 란에는 DB(HeidiSQL)와 같은 명으로 작성)
