@@ -1,6 +1,8 @@
 from pymysql import connect
 from pymysql.cursors import DictCursor
 
+from app.models import Contacts
+
 # 연락처와 관련된 모든 로직을 담당하는 파일
 # DB연결 / cursor 변수
 db = connect(
@@ -112,8 +114,14 @@ def search_contact(params):
     cursor.execute(sql)
     search_list = cursor.fetchall()
     
-    print('결과? : ', search_list)
+    for row in search_list:
+        contact = Contacts(row)   # DB에서 추출한 row를 표현하는 dictionary를 가지고, 모델 클래스인 Contacts 객체로 변환하는 작업
+        print(contact)
     
     return {
-        '임시' : '임시입니다.'
+        'code' : 200,
+        'message' : 'search complete',
+        # 'data' : {
+        #     'contacts' : 
+        # }
     }
