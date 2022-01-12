@@ -39,3 +39,9 @@ def add_contact_to_db(params):
         'code' : 200,
         'message' : '연락처 등록 성공'
     }
+    
+    
+# 모든 연락처 조회
+def get_contacts_from_db(params):
+    pass
+    
