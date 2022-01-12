@@ -102,3 +102,18 @@ def get_contacts_from_db(params):
             'contacts' : contacts_arr,    # 리스트를 통째로 응답으로 내보내줌 => JSONArray를 응답으로 주겠다는 뜻
         }
     }, 200
+    
+    
+# 키워드를 가지고 검색하는 기능
+# '경' => 조경진, 박진경 등등.. 경자가 포함되면 모두 리턴 + 본인이 가진 연락처 中
+def search_contact(params):
+    sql = f"SELECT * FROM contacts WHERE name LIKE '%{params['keyword']}%'"
+    
+    cursor.execute(sql)
+    search_list = cursor.fetchall()
+    
+    print('결과? : ', search_list)
+    
+    return {
+        '임시' : '임시입니다.'
+    }
