@@ -65,7 +65,7 @@ def create_app():
     # 연락처 목록을 조회하는 기능
     @app.route("/get_contacts")
     def get_contacts_url():
-        return get_contacts_from_db()
+        return get_contacts_from_db(request.args.to_dict())
             
     # 이 서버를 사용하도록 결과로 내보내자
     return app

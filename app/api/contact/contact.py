@@ -47,4 +47,10 @@ def get_contacts_from_db(params):
     # 기본버전 : 해당 사용자의 모든 연락처를 목록으로 만들어서 리턴
     # 응용버전1 : 파라미터의 최신순 or 이름순인지 정렬 순서를 입력받고 그에 맞게 리턴
     # 응용버전2 : 한번에 10개씩만 내려주자(게시판처럼, 페이징 처리)
-    pass
+    sql = f"SELECT * FROM contacts WHERE user_id = {params['user_id']}"
+    print('sql 어떻게 오나 테스트 : ', sql)
+    
+    return{
+        'code' : 200,
+        'message' : '임시 성공 응답',
+    }, 200
